@@ -56,6 +56,7 @@ export default {
         }
     },
     mounted(){
+      console.log('aa');
         var wow = new WOW();
         wow.init();
     },
