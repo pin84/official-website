@@ -79,9 +79,7 @@ export default {
         }
     },
     mounted(){
-        var wow = new WOW({
-      live: false,
-    });
+        var wow = new WOW();
         wow.init();
     },
 }

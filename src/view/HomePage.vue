@@ -57,7 +57,7 @@
       </div>
     </div>
     <!-- 客户评价 -->
-    <div id="customer" class="container-fuild">
+    <div v-if="false" id="customer" class="container-fuild">
       <div class="container customer-container">
         <p class="customer-title text-center">客户评价</p>
         <div class="swiper-container customer-swiper hidden-xs">

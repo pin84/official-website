@@ -92,20 +92,20 @@ export default {
           path: "/",
           children: []
         },
-        {
-          name: "软件产品",
-          path: "/software",
-          children: [
-            {
-              name: "智能小镇管理系统",
-              path: "/software/smartTown"
-            },
-            {
-              name: "大数据管理系统",
-              path: "/software/bigData"
-            }
-          ]
-        },
+        // {
+        //   name: "软件产品",
+        //   path: "/software",
+        //   children: [
+        //     {
+        //       name: "智能小镇管理系统",
+        //       path: "/software/smartTown"
+        //     },
+        //     {
+        //       name: "大数据管理系统",
+        //       path: "/software/bigData"
+        //     }
+        //   ]
+        // },
         {
           name: "相关服务",
           path: "/service",

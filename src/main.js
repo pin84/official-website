@@ -19,7 +19,7 @@ import 'swiper/dist/css/swiper.min.css';
 import './assets/css/reset.min.css'
 
 /* jquery */
-import 'jquery'
+// import 'jquery'
 
 /* bootstarp */
 import './assets/css/bootstrap.min.css'
