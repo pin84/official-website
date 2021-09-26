@@ -3,11 +3,25 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const state = {
 
+
+const nav = {
+  state: {
+    navPath: '/',
+  },
+
+  mutations: {
+    navPath(state, params) {
+      state.navPath = params
+    },
+  }
 }
 
 
+
 export default new Vuex.Store({
-    state
+  modules: {
+    nav
+  }
+
 })

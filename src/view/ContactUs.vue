@@ -5,34 +5,41 @@
       <div class="container-fuild ContactUs-container">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-6">
-            <form class="form-horizontal" role="form">
-              <div class="form-group">
-                <label for="name" class="col-sm-2 control-label">姓名</label>
-                <div class="col-sm-10 col-xs-12">
-                  <input type="text" class="form-control" id="name" placeholder="请输入名字">
+            <form class="form-horizontal">
+              <div
+                class="form-group"
+                v-for="(item, index) in form"
+                :key="index"
+              >
+                <label class="col-sm-2 control-label">{{ item.label }}:</label>
+                <div class="col-sm-10 col-xs-12" v-if="index < 3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    :placeholder="item.placeholder"
+                    v-model="item.inputText"
+                  />
                 </div>
-              </div>
-              <div class="form-group">
-                <label for="email" class="col-sm-2 control-label">邮箱</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="email" placeholder="请输入邮箱">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="tel" class="col-sm-2 control-label">电话</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="tel" placeholder="请输入电话">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="content" class="col-sm-2 control-label">内容</label>
-                <div class="col-sm-10">
-                  <textarea class="form-control" id="content" rows="8" placeholder="请输入内容"></textarea>
+                <div v-else class="col-sm-10">
+                  <textarea
+                    class="form-control"
+                    id="content"
+                    rows="8"
+                    placeholder="请输入内容"
+                    v-model="item.inputText"
+                  ></textarea>
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <button type="submit" class="btn btn-default btn-block">提交</button>
+                  <span @click="submit" class="btn btn-default btn-block"
+                    >提交</span
+                  >
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <p class="text">注：请正确填写信息，我们将在24小时内回复。</p>
                 </div>
               </div>
             </form>
@@ -48,10 +55,44 @@
 <script>
 // import { WOW } from 'wowjs'
 // import BMap from "BMap";
+import { Dialog } from "vant";
+import { checkEmail, checkPhone } from "../utils/checkData";
 export default {
   name: "ContactUs",
   data() {
-    return {};
+    return {
+      userInfo: {
+        username: "",
+        password: "",
+      },
+
+      form: [
+        {
+          label: "姓名",
+          placeholder: "请输入名字",
+          inputText: "",
+        },
+        {
+          label: "邮箱",
+          placeholder: "请输入邮箱",
+          inputText: "",
+        },
+        {
+          label: "电话",
+          placeholder: "请输入电话",
+          inputText: "",
+        },
+        {
+          label: "内容",
+          placeholder: "请输入内容",
+          inputText: "",
+        },
+      ],
+    };
+  },
+
+  created() {
+    // this.initData();
   },
   mounted() {
     // var map = new BMap.Map("map"); // 创建地图实例
@@ -72,10 +113,43 @@ export default {
     // map.openInfoWindow(infoWindow, map.getCenter()); // 打开信息窗口
     // var wow = new WOW();
     // wow.init();
-  }
+  },
+
+  methods: {
+    initData() {},
+    async submit() {
+      let cemail = checkEmail(this.form[1].inputText);
+      let cphone = checkPhone(this.form[2].inputText);
+
+      if (!cemail || !cphone) {
+        Dialog({ message: "请输入正确的邮箱或电话号码。" });
+        return;
+      }
+
+      let d = {
+        name: this.form[0].inputText,
+        email: this.form[1].inputText,
+        phone: this.form[2].inputText,
+        content: this.form[3].inputText,
+      };
+      let res = await this.$post("/ow/contactus", d);
+      this.form.forEach((item) => {
+        item.inputText = "";
+      });
+      Dialog({ message: "消息已提交，我们将在一小时内回复您。" });
+    },
+  },
 };
 </script>
 <style scoped>
+.form {
+  /* width: 0vw; */
+  /* padding: 50px; */
+}
+.text {
+  font-weight: 100;
+  font-size: 12px;
+}
 .banner {
   color: #fff;
   font-size: 30px;

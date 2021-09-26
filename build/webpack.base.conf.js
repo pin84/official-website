@@ -5,7 +5,7 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
@@ -17,8 +17,8 @@ module.exports = {
     app: './src/main.js'
   },
   externals: {
-    "BMap": "BMap" 
-  }, 
+    "BMap": "BMap"
+  },
   plugins: [
     new webpack.ProvidePlugin({
       $: "jquery",
@@ -44,6 +44,10 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: '/\.sass$/',
+        loaders: ['style', 'css', 'sass']
+      },
       {
         test: /\.vue$/,
         loader: 'vue-loader',

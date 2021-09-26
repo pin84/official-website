@@ -5,8 +5,10 @@
     <div class="header-top container-fuild hidden-xs">
       <div class="container">
         <div class="server pull-left">
-          <span class="glyphicon glyphicon-earphone"></span>888-888-888
-          <span class="glyphicon glyphicon-envelope"></span>liyunkun_11@163.com
+          <span class="glyphicon glyphicon-earphone"></span>
+          <a href="tel:18977256053">18610141858</a>
+          <span class="glyphicon glyphicon-envelope"></span>
+          <a href="mailto:qp1984@live.com">qp1984@live.com</a>
           <span class="glyphicon glyphicon-time"></span>7x24小时为您服务
         </div>
         <div class="shejiao pull-right">
@@ -19,24 +21,27 @@
     <div class="header-nav container hidden-xs">
       <!-- 导航logo -->
       <div class="header-nav-logo">
-        <img src="@/assets/img/logo_black.png">
+        <img src="@/assets/img/logo_black.png" />
       </div>
       <!-- 导航内容 -->
       <ul class="header-nav-wrapper">
         <li
-          v-for="(item,index) in navList"
+          v-for="(item, index) in navList"
           :key="index"
-          :class="index==navIndex?'active':''"
-          @click="navClick(index,item.name)"
+          :class="index == navIndex ? 'active' : ''"
+          @click="navClick(item)"
         >
           <router-link :to="item.path">
-            {{item.name}}
-            <span v-if="item.children.length>0" class="glyphicon glyphicon-menu-down"></span>
+            {{ item.name }}
+            <span
+              v-if="item.children.length > 0"
+              class="glyphicon glyphicon-menu-down"
+            ></span>
             <i class="underline"></i>
           </router-link>
-          <dl v-if="item.children.length>0">
-            <dt v-for="(i,n) in item.children" :key="n">
-              <router-link :to="i.path">{{i.name}}</router-link>
+          <dl v-if="item.children.length > 0">
+            <dt v-for="(i, n) in item.children" :key="n">
+              <router-link :to="i.path">{{ i.name }}</router-link>
             </dt>
           </dl>
         </li>
@@ -45,33 +50,37 @@
     <!-- 手机导航 -->
     <div class="header-nav-m container-fuild visible-xs">
       <div class="header-nav-m-logo">
-        <img class="center-block" src="@/assets/img/logo_black.png" alt="logo">
+        <img
+          class="center-block"
+          src="@/assets/img/logo_black.png"
+          alt="logo"
+        />
       </div>
       <!-- 导航栏 -->
-      <div class="header-nav-m-menu text-center">
-        {{menuName}}
-        <div
-          class="header-nav-m-menu-wrapper"
-          data-toggle="collapse"
-          data-target="#menu"
-          @click="menuClick"
-        >
-          <span :class="menuClass"></span>
-        </div>
+      <div
+        class="header-nav-m-menu text-center"
+        data-toggle="collapse"
+        data-target="#menu"
+        @click="menuClick"
+      >
+        {{ menuName }}
+
+        <!-- <div class="header-nav-m-menu-wrapper" @click="menuClick"> -->
+        <span class="trangle" :class="menuClass"></span>
+        <!-- </div> -->
         <!-- 导航内容 -->
         <ul id="menu" class="header-nav-m-wrapper collapse">
           <li
-            v-for="(item,index) in navList"
+            v-for="(item, index) in navList"
             :key="index"
-            :class="index==navIndex?'active':''"
-            @click="navClick(index,item.name)"
+            :class="index == navIndex ? 'active' : ''"
+            @click="navClick(item)"
             data-toggle="collapse"
             data-target="#menu"
+            class="router-item"
           >
-            <router-link :to="item.path">
-              {{item.name}}
-              <i class="underline"></i>
-            </router-link>
+            {{ item.name }}
+            <i class="underline"></i>
           </li>
         </ul>
       </div>
@@ -83,14 +92,16 @@ export default {
   name: "Header",
   data() {
     return {
-      navIndex: sessionStorage.getItem('navIndex') ? sessionStorage.getItem('navIndex') : 0,
+      navIndex: sessionStorage.getItem("navIndex")
+        ? sessionStorage.getItem("navIndex")
+        : 0,
       menuName: "首页",
       menuClass: "glyphicon glyphicon-menu-down",
       navList: [
         {
           name: "首页",
           path: "/",
-          children: []
+          children: [],
         },
         // {
         //   name: "软件产品",
@@ -109,36 +120,55 @@ export default {
         {
           name: "相关服务",
           path: "/service",
-          children: []
+          children: [],
         },
         {
           name: "新闻动态",
           path: "/newsinformation",
-          children: []
+          children: [],
         },
         {
           name: "公司介绍",
           path: "/companyintroduction",
-          children: []
+          children: [],
         },
         {
           name: "工作机会",
           path: "/jobchance",
-          children: []
+          children: [],
         },
         {
           name: "联系我们",
           path: "/contactus",
-          children: []
-        }
-      ]
+          children: [],
+        },
+      ],
     };
   },
-  methods: {
-    navClick(index, name) {
+
+  watch: {
+    "$store.state.nav.navPath": function (val) {
+      let index = this.navList.findIndex((item) => item.path == val);
       this.navIndex = index;
-      sessionStorage.setItem('navIndex',index)
-      this.menuName = name;
+    },
+  },
+
+  created() {
+    this.initNva();
+  },
+  methods: {
+    initNva() {
+      let curRouter = sessionStorage.getItem("navIndex")
+        ? sessionStorage.getItem("navIndex")
+        : "/";
+      let index = this.navList.findIndex((item) => item.path == curRouter);
+      this.navIndex = index;
+    },
+    navClick(obj) {
+      this.$store.commit("navPath", obj.path);
+      sessionStorage.setItem("navIndex", obj.path);
+      this.menuName = obj.name;
+      this.$router.push({ path: obj.path });
     },
     menuClick() {
       if (this.menuClass == "glyphicon glyphicon-menu-down") {
@@ -146,15 +176,15 @@ export default {
       } else {
         this.menuClass = "glyphicon glyphicon-menu-down";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
 /* 顶部 */
 #header {
   background: #f4f4f4;
-  transition: all ease 0.6s;
+  /* transition: all ease 0.6s; */
 }
 #header .header-top {
   height: 50px;
@@ -167,27 +197,26 @@ export default {
 #header .header-top span {
   margin: 0 8px;
 }
+#header .header-top a {
+  color: #fff;
+}
 /* 导航栏 */
 #header .header-nav {
   height: 110px;
 }
 /* 导航栏logo */
 #header .header-nav .header-nav-logo {
-  width: 100px;
+  width: 60px;
   height: 100%;
   float: left;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 /* 导航栏logo图片 */
 #header .header-nav .header-nav-logo img {
-  width: 95px;
-  height: 45px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
+  width: 100%;
+  padding-top: 5px;
 }
 /* 导航栏 导航容器 */
 #header .header-nav-fixed .header-nav-wrapper {
@@ -286,19 +315,15 @@ export default {
   }
   /* 导航栏logo容器 */
   #header .header-nav-m .header-nav-m-logo {
-    height: 80px;
+    height: 30px;
     position: relative;
+    display: flex;
+    align-items: center;
   }
   /* 导航栏logo图片 */
   #header .header-nav-m .header-nav-m-logo img {
-    width: 95px;
-    height: 45px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
+    height: 100%;
+    padding-top: 5px;
   }
   /* 导航栏  菜单容器 */
   #header .header-nav-m .header-nav-m-menu {
@@ -308,7 +333,15 @@ export default {
     line-height: 50px;
     background: #474747;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
+  #header .header-nav-m .header-nav-m-menu .trangle {
+    font-size: 10px;
+    margin-left: 10px;
+  }
+
   /* 导航栏 菜单图标 */
   #header .header-nav-m .header-nav-m-menu-wrapper {
     position: absolute;
@@ -320,6 +353,7 @@ export default {
     color: #fff;
     z-index: 999999;
     font-size: 12px;
+    border: 1px solid red;
   }
   /* 导航栏 */
   #header .header-nav-m .header-nav-m-wrapper {
@@ -335,15 +369,16 @@ export default {
     height: 40px;
     line-height: 40px;
     border-bottom: 1px solid #ccc;
+    font-size: 12px;
   }
   /* 导航栏 每个导航下面的 a 链接 */
-  #header .header-nav-m .header-nav-m-wrapper > li > a {
-    color: #fff;
+  /* #header .header-nav-m .header-nav-m-wrapper > li > a {
+    color: red;
     font-size: 15px;
     font-weight: bold;
     padding: 15px 0;
     position: relative;
-  }
+  } */
   /* 导航栏 每个导航下面的 a 链接的右侧小三角 */
   #header .header-nav .header-nav-wrapper > li > a > span {
     font-size: 10px;

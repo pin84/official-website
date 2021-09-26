@@ -3,42 +3,65 @@
     <div class="banner container-fuild text-center">工作机会</div>
     <div class="container">
       <div class="JobChance-container wow pulse">
-        <h2>PHP工程师</h2>
+        <h2>node工程师</h2>
         <p>岗位职责</p>
         <ol>
-          <li>负责公司产品及项目系统的功能开发、代码优化；</li>
-          <li>负责项目组人员任务的分配与监督，及时解决项目技术问题；</li>
-          <li>参与系统需求分析与设计，并负责完成PHP核心代码，接口规范制定，架构设计。</li>
+          <li>参与nodejs服务的功能设计和研发工作；</li>
+          <li>参与功能和技术预研；</li>
+          <li>保障服务性能，维护服务功能；</li>
+          <li>维护功能的单元测试；</li>
+          <li>维护系统的设计文档；</li>
         </ol>
         <p>任职要求</p>
         <ol>
-          <li>精通PHP+MySql+Apache开发，精通使用JavaScript、AJAX、JQuery等技术；3年以上WEB应用程序开发经验， 有大型网站或电子商务网站工作经验者优先；</li>
-          <li>熟悉jQuery，具有AJAX、HTML、CSS、JAVASCRIPT等方面的开发经验；</li>
-          <li>熟悉PHP模板技术、框架技术及设计模式，有php框架系统进行开发经验者优先，如：phpcms，dedecms等；</li>
-          <li>精通数据库原理，精通MYSQL、了解Mongo等并有相关关系数据库设计开发经验, 了解Mysql的数据库配置管理、性能优化；</li>
-          <li>熟悉常见的数据结构和算法，具备良好的编程习惯及较强的文档编写能力；</li>
-          <li>熟悉各种WEB缓存技术,熟悉大型网站构架和性能优化；</li>
-          <li>对网站系统架构的部署、搭建、优化、排错等方面有丰富经验，对高负载、大访问量情况下的系统架构有经验者优先。</li>
+          <li>
+            javascript编程2年以上，且nodejs高性能服务开发经验1年以上，熟练掌握es6、es7语法；
+          </li>
+          <li>熟悉typescript，熟练掌握接口、类型约束等相关功能；</li>
+          <li>熟悉设计模式，能够熟练使用类之间关系实现业务功能；</li>
+          <li>熟悉nodejs的事件机制、常见模块的使用方法；</li>
+          <li>全用github管理代码</li>
+          <li>了解并掌握http、websocket等常用通信协议；</li>
+          <li>了解msql的使用，并掌握mongoDB、redis其中一种数据库的使用；</li>
+          <li>
+            要求有较强的逻辑思维和数据思维，有良好的解决问题的能力，能够独立承担复杂功能的开发工作，具有团队管理经验者优先；
+          </li>
+          <li>
+            远程办公，无需坐班。
+          </li>
         </ol>
-        <button class="center-block btn btn-warning btn-lg">投递简历</button>
+        <button
+          @click="$router.push('contactus')"
+          class="center-block btn btn-warning btn-lg"
+        >
+          联系我们
+        </button>
       </div>
     </div>
+    <!-- <div class="nodata">
+      无
+    </div> -->
   </div>
 </template>
 <script>
-import { WOW } from 'wowjs';
+import { WOW } from "wowjs";
 export default {
   name: "JobChance",
   data() {
     return {};
   },
-  mounted(){
+  mounted() {
     var wow = new WOW();
     wow.init();
-  }
+  },
 };
 </script>
-<style scoped>
+
+
+<style   scoped>
+.nodata {
+  height: 500px;
+}
 .banner {
   color: #fff;
   font-size: 30px;
@@ -56,23 +79,23 @@ export default {
   transition: all ease 0.5s;
   border: 1px dashed salmon;
 }
-.JobChance-container h2{
+.JobChance-container h2 {
   color: rgb(255, 102, 19);
   font-weight: bolder;
   text-align: center;
 }
-.JobChance-container p{
-font-size: 20px;
+.JobChance-container p {
+  font-size: 20px;
   color: rgb(255, 102, 19);
   font-weight: 700;
 }
-.JobChance-container ol{
-    list-style-type: decimal;
-    padding-left: 30px;
+.JobChance-container ol {
+  list-style-type: decimal;
+  padding-left: 30px;
 }
-.JobChance-container ol>li{
-    font-size: 14px;
-    line-height: 2.7rem;
+.JobChance-container ol > li {
+  font-size: 14px;
+  line-height: 2.7rem;
 }
 @media screen and (max-width: 997px) {
   .JobChance-container {
